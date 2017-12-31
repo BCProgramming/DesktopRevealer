@@ -20,11 +20,29 @@ namespace Show_Desktop
         {
             InitializeComponent();
         }
-
+        NotifyIcon ni = null;
+        ContextMenuStrip niMenu = null;
         private void frmShowDesktop_Load(object sender, EventArgs e)
         {
             Invalidate();
             Refresh();
+            ni = new NotifyIcon();
+            ni.Icon = this.Icon;
+            ni.Text = "Show Desktop Utility";
+            niMenu = new ContextMenuStrip();
+            niMenu.Renderer = new ToolStripProfessionalRenderer();
+            ToolStripMenuItem tsItem = new ToolStripMenuItem("E&xit");
+            tsItem.Click += TsItemExit_Click;
+            niMenu.Items.Add(tsItem);
+            ni.ContextMenuStrip = niMenu;
+            ni.Visible = true;
+            
+        }
+
+        private void TsItemExit_Click(object sender, EventArgs e)
+        {
+            ni.Dispose();
+            Application.Exit();
         }
 
         private void frmShowDesktop_Shown(object sender, EventArgs e)
